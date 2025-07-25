@@ -1663,7 +1663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 538443078}
   offset: {x: 0, y: 0, z: -10}
-  smoothSpeed: 5
+  smoothSpeed: 20
 --- !u!1 &525797675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1977,7 +1977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a41a6c45f1a2714d950969a2c4a7496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 3
   jumpHeight: 1
   jumpDuration: 0.8
 --- !u!1 &806057373

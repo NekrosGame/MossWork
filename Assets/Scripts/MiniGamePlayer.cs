@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MiniGamePlayer: MonoBehaviour
+public class MiniGamePlayer : MonoBehaviour
 {
     Animator animator = null;
     Rigidbody2D _rigidbody = null;
@@ -14,8 +14,12 @@ public class MiniGamePlayer: MonoBehaviour
 
     public bool godMode = false;
 
+    GameManager gameManager = null;
+
     void Start()
     {
+        gameManager = GameManager.Instance;
+
         animator = transform.GetComponentInChildren<Animator>();
         _rigidbody = transform.GetComponent<Rigidbody2D>();
 
@@ -39,6 +43,7 @@ public class MiniGamePlayer: MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
                 {
                     // 게임 재시작
+                    gameManager.RestartGame();
                 }
             }
             else
@@ -86,5 +91,6 @@ public class MiniGamePlayer: MonoBehaviour
         animator.SetInteger("IsDie", 1);
         isDead = true;
         deathCooldown = 1f;
+        gameManager.GameOver();
     }
 }

@@ -15,6 +15,9 @@ public class QuestTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        // other.gameObject가 파괴된 경우 예외 방지
+        if (other == null || other.gameObject == null) return;
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Npc"))
         {
             rKeyPanel.SetActive(false);

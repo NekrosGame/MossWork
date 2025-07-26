@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class QuestTrigger : MonoBehaviour
 {
-    public GameObject RKeyPanel; // 파스칼식으로 변경
+    public GameObject RKeyPanel; 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -10,7 +10,6 @@ public class QuestTrigger : MonoBehaviour
         {
             if (RKeyPanel != null)
                 RKeyPanel.SetActive(true);
-            Debug.Log("퀘스트 Npc 범위에 진입!");
         }
     }
 
@@ -23,7 +22,6 @@ public class QuestTrigger : MonoBehaviour
         {
             if (RKeyPanel != null)
                 RKeyPanel.SetActive(false);
-            Debug.Log("퀘스트 Npc 범위에서 이탈!");
         }
     }
 }

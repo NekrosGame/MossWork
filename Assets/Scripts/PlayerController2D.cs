@@ -5,17 +5,18 @@ public class PlayerController2D : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpHeight = 1f;
-    public float jumpDuration = 0.3f; // 위로 올라갔다 내려오기까지의 전체 시간
+    public float jumpDuration = 0.8f; // 위로 올라갔다 내려오기까지의 전체 시간
+
+    [SerializeField] private Transform playerImage; // Player 하위에 위치한 Sprite/Animator 오브젝트
 
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
     private Vector2 moveInput;
-
     private bool isJumping = false;
-    private Vector3 jumpStartPos;
-    private float jumpTimer;
+    private float jumpTimer = 0f;
+    private Vector3 imageOriginPos;
 
     private static readonly int IsMove = Animator.StringToHash("IsMove");
     private static readonly int MoveY = Animator.StringToHash("MoveY");
@@ -25,8 +26,10 @@ public class PlayerController2D : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
-        animator = GetComponentInChildren<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // 하위 오브젝트에서 Animator와 SpriteRenderer 가져오기
+        animator = playerImage.GetComponent<Animator>();
+        spriteRenderer = playerImage.GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -38,6 +41,7 @@ public class PlayerController2D : MonoBehaviour
         animator.SetBool(IsMove, moveInput.x != 0 || moveInput.y != 0);
         animator.SetFloat(MoveY, moveInput.y);
 
+        // 좌우 반전 처리 (왼쪽이동)
         if (moveInput.x != 0)
             spriteRenderer.flipX = moveInput.x < 0;
 
@@ -45,8 +49,8 @@ public class PlayerController2D : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
         {
             isJumping = true;
-            jumpStartPos = transform.position;
             jumpTimer = 0f;
+            imageOriginPos = playerImage.localPosition; // 로컬 위치 저장
             animator.SetTrigger(IsJump);
         }
     }
@@ -54,24 +58,23 @@ public class PlayerController2D : MonoBehaviour
     void FixedUpdate()
     {
         // 이동 처리
-        Vector2 move = new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed);
+        Vector2 move = moveInput * moveSpeed;
         rb.velocity = move;
 
-        // 점프 애니메이션 처리
+        // 점프 처리 (PlayerImage만 위로 띄움)
         if (isJumping)
         {
             jumpTimer += Time.fixedDeltaTime;
             float progress = jumpTimer / jumpDuration;
 
-            // 부드러운 위아래 점프 곡선 (sine 기반)
             float offsetY = Mathf.Sin(progress * Mathf.PI) * jumpHeight;
-            transform.position = new Vector3(transform.position.x, jumpStartPos.y + offsetY, transform.position.z);
+            Vector3 offset = new Vector3(0f, offsetY, 0f);
+            playerImage.localPosition = imageOriginPos + offset;
 
             if (progress >= 1f)
             {
-                // 점프 완료 → 위치 복귀
                 isJumping = false;
-                transform.position = new Vector3(transform.position.x, jumpStartPos.y, transform.position.z);
+                playerImage.localPosition = imageOriginPos;
             }
         }
     }

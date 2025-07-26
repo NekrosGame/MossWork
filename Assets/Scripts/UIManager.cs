@@ -7,13 +7,12 @@ using UnityEngine.SceneManagement; // 추가
 
 public class UIManager : MonoBehaviour
 {
+    public static int MaxScore; // MaxScore를 public static으로 변경하여 외부에서 접근 가능하도록 수정
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI RestartText;
     public TextMeshProUGUI ExitText;
     public TextMeshProUGUI ClickJumpText;
     public TextMeshProUGUI MaxScoreText;
-
-    private int MaxScore = 0;
 
     public void Start()
     {

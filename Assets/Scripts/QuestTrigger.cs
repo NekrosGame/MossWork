@@ -8,7 +8,8 @@ public class QuestTrigger : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Npc"))
         {
-            rKeyPanel.SetActive(true);
+            if (rKeyPanel != null)
+                rKeyPanel.SetActive(true);
             Debug.Log("퀘스트 Npc 범위에 진입!");
         }
     }
@@ -20,7 +21,8 @@ public class QuestTrigger : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Npc"))
         {
-            rKeyPanel.SetActive(false);
+            if (rKeyPanel != null)
+                rKeyPanel.SetActive(false);
             Debug.Log("퀘스트 Npc 범위에서 이탈!");
         }
     }

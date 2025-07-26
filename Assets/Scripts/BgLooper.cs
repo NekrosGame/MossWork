@@ -4,18 +4,18 @@ using System.Collections.Generic;
 
 public class BgLooper : MonoBehaviour
 {
-    public int obestacleCount = 0;
-    public Vector3 obstacleLastPosition = Vector3.zero;
+    public int ObstacleCount = 0; // 파스칼식으로 변경
+    public Vector3 ObstacleLastPosition = Vector3.zero; // 파스칼식으로 변경
 
     void Start()
     {
         Obstacle[] obstacles = GameObject.FindObjectsOfType<Obstacle>();
-        obstacleLastPosition = obstacles[0].transform.position;
-        obestacleCount = obstacles.Length;
+        ObstacleLastPosition = obstacles[0].transform.position;
+        ObstacleCount = obstacles.Length;
 
-        for (int i = 0; i < obestacleCount; i++)
+        for (int i = 0; i < ObstacleCount; i++)
         {
-            obstacleLastPosition = obstacles[i].SetRandomPlace(obstacleLastPosition, obestacleCount);
+            ObstacleLastPosition = obstacles[i].SetRandomPlace(ObstacleLastPosition, ObstacleCount);
         }
     }
 
@@ -26,7 +26,7 @@ public class BgLooper : MonoBehaviour
         Obstacle obstacle = collision.GetComponent<Obstacle>();
         if (obstacle)
         {
-            obstacleLastPosition = obstacle.SetRandomPlace(obstacleLastPosition, obestacleCount);
+            ObstacleLastPosition = obstacle.SetRandomPlace(ObstacleLastPosition, ObstacleCount);
         }
     }
 }

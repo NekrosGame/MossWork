@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI RestartText;
     public TextMeshProUGUI ExitText;
     public TextMeshProUGUI ClickJumpText;
+    public TextMeshProUGUI MaxScoreText;
+
+    private int MaxScore = 0;
 
     public void Start()
     {
@@ -27,6 +30,12 @@ public class UIManager : MonoBehaviour
 
         RestartText.gameObject.SetActive(false);
         ExitText.gameObject.SetActive(false);
+        ClickJumpText.gameObject.SetActive(false);
+        MaxScoreText.gameObject.SetActive(false);
+
+        // 저장된 최고점수 불러오기
+        MaxScore = PlayerPrefs.GetInt("MaxScore", 0);
+        UpdateMaxScoreText();
     }
 
     public void SetRestart()
@@ -34,11 +43,27 @@ public class UIManager : MonoBehaviour
         RestartText.gameObject.SetActive(true);
         ExitText.gameObject.SetActive(true);
         ClickJumpText.gameObject.SetActive(true);
+        MaxScoreText.gameObject.SetActive(true);
     }
 
     public void UpdateScore(int score)
     {
         ScoreText.text = score.ToString();
+
+        // 최고점수 갱신
+        if (score > MaxScore)
+        {
+            MaxScore = score;
+            PlayerPrefs.SetInt("MaxScore", MaxScore);
+            PlayerPrefs.Save();
+            UpdateMaxScoreText();
+        }
+    }
+
+    private void UpdateMaxScoreText()
+    {
+        if (MaxScoreText != null)
+            MaxScoreText.text = $"MaxScore: {MaxScore}";
     }
 
     void Update()

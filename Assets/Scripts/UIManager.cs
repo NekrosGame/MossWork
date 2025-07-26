@@ -7,38 +7,38 @@ using UnityEngine.SceneManagement; // Ãß°¡
 
 public class UIManager : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI restartText;
+    public TextMeshProUGUI ScoreText;
+    public TextMeshProUGUI RestartText;
     public TextMeshProUGUI ExitText;
-
+    public TextMeshProUGUI ClickJumpText;
 
     public void Start()
     {
-        if (restartText == null)
+        if (RestartText == null)
         {
-            Debug.LogError("restart text is null");
+            Debug.LogError("RestartText is null");
         }
 
-        if (scoreText == null)
+        if (ScoreText == null)
         {
-            Debug.LogError("scoreText is null");
+            Debug.LogError("ScoreText is null");
             return;
         }
 
-        restartText.gameObject.SetActive(false);
+        RestartText.gameObject.SetActive(false);
         ExitText.gameObject.SetActive(false);
-
     }
 
     public void SetRestart()
     {
-        restartText.gameObject.SetActive(true);
+        RestartText.gameObject.SetActive(true);
         ExitText.gameObject.SetActive(true);
+        ClickJumpText.gameObject.SetActive(true);
     }
 
     public void UpdateScore(int score)
     {
-        scoreText.text = score.ToString();
+        ScoreText.text = score.ToString();
     }
 
     void Update()
